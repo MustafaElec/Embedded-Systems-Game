@@ -109,21 +109,21 @@ void checkCollisions() {
     for (const auto& obstacle : obstacles) {
         if (pixelX < obstacle.x + obstacle.width && pixelX + squareSize > obstacle.x &&
             pixelY < obstacle.y + obstacle.height && pixelY + squareSize > obstacle.y) {
-            if (!isInvincible) {
-                health--;
-                isInvincible = true;
-                invincibilityTimer.start();
-            }
+            health--;
+            isInvincible = true;
+            invincibilityTimer.reset();
+            invincibilityTimer.start();
+            break;
         }
     }
 
     for (auto& spike : spikes) {
         if (spike.isFull && pixelX < spike.x + 3 && pixelX + squareSize > spike.x) {
-            if (!isInvincible) {
-                health--;
-                isInvincible = true;
-                invincibilityTimer.start();
-            }
+            health--;
+            isInvincible = true;
+            invincibilityTimer.reset();
+            invincibilityTimer.start();
+            break;
         }
     }
 
@@ -193,5 +193,3 @@ int main() {
         ThisThread::sleep_for(50ms);
     }
 }
-
- 
