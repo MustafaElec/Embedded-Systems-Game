@@ -5,10 +5,16 @@
 
 class Score {
 public:
-    Score(int screenWidth);
-    void draw(N5110& lcd, int health);
+    explicit Score(int width);
+    void increaseScore(int increment);
+    int getScore() const;
+    void resetScore();
+    void draw(N5110& lcd, int health, int maxHealth, int scoreValue);
+
+    static const int MAX_HEALTH = 5;
 
 private:
+    int scoreValue;
     int screenWidth;
 };
 

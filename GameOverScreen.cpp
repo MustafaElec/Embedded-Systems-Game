@@ -1,12 +1,10 @@
 #include "GameOverScreen.h"
-#include "N5110.h"
 
-void GameOverScreen::draw(N5110& lcd) {
+void GameOverScreen::draw(N5110& lcd, int score) {
     lcd.clear();
-    lcd.printString("Game Over", 15, 2);
+    lcd.printString("Game Over", 0, 2);
+    char scoreText[20];
+    snprintf(scoreText, sizeof(scoreText), "Score: %d", score);
+    lcd.printString(scoreText, 0, 3);
     lcd.refresh();
-}
-
-void GameOverScreen::update() {
-    // Implement game over screen logic here
 }

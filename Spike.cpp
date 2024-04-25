@@ -1,4 +1,6 @@
 #include "Spike.h"
+#include "N5110.h"
+#include "mbed.h"
 #include <chrono>
 
 using namespace std::chrono;
@@ -9,13 +11,18 @@ Spike::Spike(int x) : x(x), isPeeping(true), isFull(false), timer() {
 
 void Spike::draw(N5110& lcd, int screenHeight) const {
     if (isPeeping) {
-        lcd.setPixel(x, screenHeight - 1, true);
+        // Draw hollow rectangles at the bottom and top
+        for (int i = 0; i < 3; i++) { // Width of the rectangle
+            lcd.setPixel(x + i, 0, true); // Top rectangle
+            lcd.setPixel(x + i, screenHeight - 1, true); // Bottom rectangle
+        }
     } else if (isFull) {
         for (int y = 0; y < screenHeight; y++) {
-            lcd.setPixel(x, y, true);
+            lcd.setPixel(x, y, true); // Full spike
         }
     }
 }
+
 
 void Spike::update(int screenWidth) {
     int elapsed = duration_cast<milliseconds>(timer.elapsed_time()).count();

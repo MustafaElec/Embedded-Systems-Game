@@ -1,12 +1,11 @@
-#ifndef GAME_OVER_SCREEN_H
-#define GAME_OVER_SCREEN_H
+#ifndef GAMEOVERSCREEN_H
+#define GAMEOVERSCREEN_H
 
-#include "Screen.h"
+#include "N5110.h"
 
-class GameOverScreen : public Screen {
+class GameOverScreen {
 public:
-    void draw(N5110& lcd);
-    void update();
+    void draw(N5110& lcd, int score);
 };
 
 #endif

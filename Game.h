@@ -5,6 +5,8 @@
 #include "Obstacle.h"
 #include "Spike.h"
 #include "Score.h"
+#include "PowerUp.h"
+#include "GameOverScreen.h"
 #include <vector>
 #include "mbed.h"
 
@@ -16,34 +18,38 @@ public:
     Game(N5110& lcd, Joystick& joystick, mbed::DigitalIn& joystickButton);
 
     void run();
+    void updateEntities();
 
 private:
     N5110& lcd;
     Joystick& joystick;
     mbed::DigitalIn& joystickButton;
+    GameOverScreen gameOverScreen;
 
     const int screenHeight = 48;
     const int screenWidth = 84;
     const int squareSize = 5;
     const int movementSpeed = 4;
     const int gravityEffect = 1;
-    const int invincibilityPeriod = 2000;
+    int invincibilityPeriod = 2000;
 
     Character character;
     std::vector<Obstacle> obstacles;
     std::vector<Spike> spikes;
+    std::vector<PowerUp> powerUps;
     Score score;
 
-    int health = 3;
-    bool gameActive = true;
-    bool isInvincible = false;
+   int health;
+    int maxHealth;
+    bool gameActive;
+    bool isInvincible;
     mbed::Timer invincibilityTimer;
 
     void initializeGame();
     void updateGameLogic();
     void checkCollisions();
     void draw();
-    void triggerInvincibility();
+    void triggerInvincibility(int duration);
 };
 
 #endif
