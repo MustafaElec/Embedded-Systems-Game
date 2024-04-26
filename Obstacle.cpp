@@ -1,9 +1,9 @@
 #include "Obstacle.h"
-#include <cstdlib>
+
 
 Obstacle::Obstacle(int x, int y, int width, int height) : x(x), y(y), width(width), height(height) {}
 
-void Obstacle::draw(N5110& lcd) const { // Marked as const
+void Obstacle::draw(N5110& lcd) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             lcd.setPixel(x + i, y + j, true);
@@ -11,13 +11,17 @@ void Obstacle::draw(N5110& lcd) const { // Marked as const
     }
 }
 
-bool Obstacle::checkCollision(const Character& character) const { // Marked as const
-    return character.getX() < x + width && character.getX() + character.getSize() > x &&
-           character.getY() < y + height && character.getY() + character.getSize() > y;
+bool Obstacle::checkCollision(const Character& character) {
+    return character.getX() < x + width && character.getX() + character.getWidth() > x &&
+           character.getY() < y + height && character.getY() + character.getHeight() > y;
 }
 
 void Obstacle::move(int dx) {
     x += dx;
+}
+
+bool Obstacle::isOffScreen(int screenWidth) {
+    return x < -width;
 }
 
 void Obstacle::reset(int screenWidth, int screenHeight) {
@@ -25,6 +29,7 @@ void Obstacle::reset(int screenWidth, int screenHeight) {
     y = rand() % (screenHeight - height);
 }
 
-bool Obstacle::isOffScreen(int screenWidth) const { // New method to check if the obstacle is off screen
-    return x + width < 0;
-}
+int Obstacle::getX() const { return x; }
+int Obstacle::getY() const { return y; }
+int Obstacle::getWidth() const { return width; }
+int Obstacle::getHeight() const { return height; }

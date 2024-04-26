@@ -9,7 +9,7 @@ Spike::Spike(int x) : x(x), isPeeping(true), isFull(false), timer() {
     timer.start();
 }
 
-void Spike::draw(N5110& lcd, int screenHeight) const {
+void Spike::draw(N5110& lcd, int screenHeight)  {
     if (isPeeping) {
         // Draw hollow rectangles at the bottom and top
         for (int i = 0; i < 3; i++) { // Width of the rectangle
@@ -42,5 +42,5 @@ void Spike::update(int screenWidth) {
 }
 
 bool Spike::checkCollision(const Character& character) const {
-    return isFull && character.getX() < x + 3 && character.getX() + character.getSize() > x;
+    return isFull && character.getX() < x + 3 && character.getX() + character.getWidth() > x;
 }

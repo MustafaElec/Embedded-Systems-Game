@@ -7,11 +7,15 @@
 class Obstacle {
 public:
     Obstacle(int x, int y, int width, int height);
-    void draw(N5110& lcd) const; // Mark as const
-    bool checkCollision(const Character& character) const; // Mark as const
+    void draw(N5110& lcd);
+    bool checkCollision(const Character& character);
     void move(int dx);
+    bool isOffScreen(int screenWidth);
     void reset(int screenWidth, int screenHeight);
-    bool isOffScreen(int screenWidth) const; // Add const here if implementation doesn't modify the object
+    int getX() const;
+    int getY() const;
+    int getWidth() const;
+    int getHeight() const;
 
 private:
     int x, y, width, height;

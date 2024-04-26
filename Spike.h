@@ -8,10 +8,9 @@
 class Spike {
 public:
     Spike(int x);
-    void draw(N5110& lcd, int screenHeight) const;
+    void draw(N5110& lcd, int screenHeight);
     void update(int screenWidth);
     bool checkCollision(const Character& character) const;
-
 private:
     int x;
     bool isPeeping;

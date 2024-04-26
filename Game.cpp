@@ -6,7 +6,7 @@
 using namespace std::chrono;
 
 Game::Game(N5110& lcd, Joystick& joystick, mbed::DigitalIn& joystickButton)
-    : lcd(lcd), joystick(joystick), joystickButton(joystickButton), character(screenWidth / 2, screenHeight / 2, squareSize), score(screenWidth) {
+    : lcd(lcd), joystick(joystick), joystickButton(joystickButton), character(screenWidth / 2, screenHeight / 2), score(screenWidth) {
     initializeGame();
     maxHealth = Score::MAX_HEALTH;
 }
@@ -92,7 +92,7 @@ void Game::updateGameLogic() {
 }
 
 void Game::updateEntities() {
-    for (auto& powerUp : powerUps) {
+     for (auto& powerUp : powerUps) {
         powerUp.update(screenWidth);
         if (powerUp.checkCollision(character)) {
             if (powerUp.getType() == INVINCIBILITY) {
@@ -132,7 +132,7 @@ void Game::updateEntities() {
 void Game::checkCollisions() {
     if (isInvincible) return;
 
-    for (const auto& obstacle : obstacles) {
+    for ( auto& obstacle : obstacles) {
         if (obstacle.checkCollision(character)) {
             health--;
             triggerInvincibility(2000);
@@ -159,14 +159,14 @@ void Game::draw() {
         character.draw(lcd, isInvincible, invincibilityTimer);
     }
 
-    for (const auto& obstacle : obstacles) {
+    for ( auto& obstacle : obstacles) {
         obstacle.draw(lcd);
     }
 
-  for (const auto& powerUp : powerUps) {
+  for ( auto& powerUp : powerUps) {
         powerUp.draw(lcd);
   }
-    for (const auto& spike : spikes) {
+    for ( auto& spike : spikes) {
         spike.draw(lcd, screenHeight);
     }
 
