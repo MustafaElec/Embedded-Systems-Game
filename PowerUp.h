@@ -13,7 +13,7 @@ enum PowerUpType {
 
 class PowerUp {
 public:
-    PowerUp(int x, int y, int size, PowerUpType type = INVINCIBILITY);
+    PowerUp(int x, PowerUpType type = INVINCIBILITY);
     void draw(N5110& lcd);
     void update(int screenWidth);
     bool checkCollision(const Character& character);

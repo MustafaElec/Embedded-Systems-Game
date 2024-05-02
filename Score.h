@@ -9,8 +9,7 @@ public:
     void increaseScore(int increment);
     int getScore() const;
     void resetScore();
-    void draw(N5110& lcd, int health, int maxHealth, int scoreValue);
-
+    void drawWithHearts(N5110& lcd, int health, int maxHealth, int scoreValue, bool isInvinciblePowerUp, bool isHit, mbed::Timer& invincibilityTimer);
     static const int MAX_HEALTH = 5;
 
 private:

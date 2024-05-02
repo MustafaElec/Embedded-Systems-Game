@@ -6,7 +6,7 @@
 
 class Obstacle {
 public:
-    Obstacle(int x, int y, int width, int height);
+    Obstacle(int x);
     void draw(N5110& lcd);
     bool checkCollision(const Character& character);
     void move(int dx);
@@ -18,7 +18,10 @@ public:
     int getHeight() const;
 
 private:
-    int x, y, width, height;
+    int x, y;
+    static const int obstacleWidth = 16;
+    static const int obstacleHeight = 6;
+    static const int POLICECAR_SPRITE[6][16];
 };
 
 #endif

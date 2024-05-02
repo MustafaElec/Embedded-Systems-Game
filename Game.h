@@ -19,6 +19,7 @@ public:
 
     void run();
     void updateEntities();
+    void drawCountdown();
 
 private:
     N5110& lcd;
@@ -43,13 +44,19 @@ private:
     int maxHealth;
     bool gameActive;
     bool isInvincible;
+    bool isInvinciblePowerUp;
     mbed::Timer invincibilityTimer;
+
+    static const int obstacleWidth = 16;
+    static const int obstacleHeight = 6;
 
     void initializeGame();
     void updateGameLogic();
     void checkCollisions();
     void draw();
     void triggerInvincibility(int duration);
+    void triggerInvincibilityPowerUp(int duration);
+
 };
 
 #endif

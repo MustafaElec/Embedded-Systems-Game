@@ -5,11 +5,22 @@
 
 using namespace std::chrono;
 
+const int Spike::SPIKE_SPRITE[48][3] = {
+    { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 },
+    { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 },
+    { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 },
+    { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 },
+    { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 },
+    { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 },
+    { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 },
+    { 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,1,0 }, { 1,0,0 }, { 0,1,0 }
+};
+
 Spike::Spike(int x) : x(x), isPeeping(true), isFull(false), timer() {
     timer.start();
 }
 
-void Spike::draw(N5110& lcd, int screenHeight)  {
+void Spike::draw(N5110& lcd, int screenHeight) {
     if (isPeeping) {
         // Draw hollow rectangles at the bottom and top
         for (int i = 0; i < 3; i++) { // Width of the rectangle
@@ -18,11 +29,14 @@ void Spike::draw(N5110& lcd, int screenHeight)  {
         }
     } else if (isFull) {
         for (int y = 0; y < screenHeight; y++) {
-            lcd.setPixel(x, y, true); // Full spike
+            for (int i = 0; i < 3; i++) {
+                if (SPIKE_SPRITE[y][i] == 1) {
+                    lcd.setPixel(x + i, y, true);
+                }
+            }
         }
     }
 }
-
 
 void Spike::update(int screenWidth) {
     int elapsed = duration_cast<milliseconds>(timer.elapsed_time()).count();
@@ -42,5 +56,18 @@ void Spike::update(int screenWidth) {
 }
 
 bool Spike::checkCollision(const Character& character) const {
-    return isFull && character.getX() < x + 3 && character.getX() + character.getWidth() > x;
+    if (isFull) {
+        for (int y = 0; y < 48; y++) {
+            for (int i = 0; i < 3; i++) {
+                if (SPIKE_SPRITE[y][i] == 1 &&
+                    character.getX() < x + i + 1 && character.getX() + character.getWidth() > x + i &&
+                    character.getY() < y + 1 && character.getY() + character.getHeight() > y) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
+
+

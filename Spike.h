@@ -18,6 +18,8 @@ private:
     mbed::Timer timer;
     const int peepingDuration = 2000;
     const int fullDuration = 3000;
+    static const int SPIKE_SPRITE[48][3];
+
 };
 
 #endif

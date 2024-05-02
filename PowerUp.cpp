@@ -1,7 +1,7 @@
 #include "PowerUp.h"
 #include "N5110.h"
 
-PowerUp::PowerUp(int x, int y, int size, PowerUpType type) : x(x), y(y), size(5), type(type) {}
+PowerUp::PowerUp(int x, PowerUpType type) : x(x), y(rand() % (48 - 5)), size(5), type(type) {}
 
 void PowerUp::draw(N5110& lcd) {
     if (type == INVINCIBILITY) {
@@ -28,17 +28,21 @@ void PowerUp::draw(N5110& lcd) {
 void PowerUp::update(int screenWidth) {
     x -= 2;
     if (x < -size) {
-        x = screenWidth;
+        x = 2 * screenWidth + rand() % 20; //double the distance between powerups as a minimum
+        y = rand() % (48 - size);
     }
 }
 
 bool PowerUp::checkCollision(const Character& character) {
     // Check collision between the power-up and the character
-    // You can replace this with your own collision detection logic
     return (character.getX() < x + size && character.getX() + character.getWidth() > x &&
             character.getY() < y + size && character.getY() + character.getHeight() > y);
 }
 
 PowerUpType PowerUp::getType()  {
     return type;
+}
+
+void PowerUp::setX(int newX) {
+    x = newX;
 }
