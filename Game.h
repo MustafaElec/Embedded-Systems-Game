@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "N5110.h"
+#include "Joystick.h"
 #include "Character.h"
 #include "Obstacle.h"
 #include "Spike.h"
@@ -10,28 +12,27 @@
 #include <vector>
 #include "mbed.h"
 
-class N5110;
-class Joystick;
-
 class Game {
 public:
-    Game(N5110& lcd, Joystick& joystick, mbed::DigitalIn& joystickButton);
-
+    Game(N5110& lcd, Joystick& joystick, mbed::DigitalIn& joystickButton, mbed::DigitalOut& redLED, mbed::DigitalOut& blueLED, mbed::PwmOut& buzzer);
     void run();
     void updateEntities();
-    void drawCountdown();
 
 private:
     N5110& lcd;
     Joystick& joystick;
     mbed::DigitalIn& joystickButton;
+    mbed::DigitalOut& redLED;
+    mbed::DigitalOut& blueLED;
+    mbed::PwmOut& buzzer;
     GameOverScreen gameOverScreen;
 
-    const int screenHeight = 48;
-    const int screenWidth = 84;
-    const int squareSize = 5;
-    const int movementSpeed = 4;
-    const int gravityEffect = 1;
+    static const int screenHeight = 48;
+    static const int screenWidth = 84;
+    static const int obstacleWidth = 16;
+    static const int obstacleHeight = 6;
+    static const int movementSpeed = 4;
+    static const int gravityEffect = 1;
     int invincibilityPeriod = 2000;
 
     Character character;
@@ -40,23 +41,25 @@ private:
     std::vector<PowerUp> powerUps;
     Score score;
 
-   int health;
+    int health;
     int maxHealth;
     bool gameActive;
     bool isInvincible;
     bool isInvinciblePowerUp;
     mbed::Timer invincibilityTimer;
 
-    static const int obstacleWidth = 16;
-    static const int obstacleHeight = 6;
-
     void initializeGame();
     void updateGameLogic();
     void checkCollisions();
     void draw();
+    void drawCountdown();
+    void drawMainMenu();
+    void playHitSound();
+    void playCountdownBeep();
+    void playFinalCountdownBeep();
+    void playGameOverSound();
     void triggerInvincibility(int duration);
     void triggerInvincibilityPowerUp(int duration);
-
 };
 
 #endif

@@ -6,7 +6,7 @@
 
 class Obstacle {
 public:
-    Obstacle(int x);
+    Obstacle(int x, int y);
     void draw(N5110& lcd);
     bool checkCollision(const Character& character);
     void move(int dx);

@@ -43,7 +43,7 @@ void Score::drawWithHearts(N5110& lcd, int health, int maxHealth, int scoreValue
         int y = 0;
 
         if (i < health) {
-            if (isInvinciblePowerUp) {
+            if (isInvinciblePowerUp && !isHit) {
                 // Draw the padlock sprite
                 for (int row = 0; row < 6; row++) {
                     for (int col = 0; col < 5; col++) {
